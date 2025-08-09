@@ -1,5 +1,6 @@
 .container {
-  display: flex;
+  display: grid;
+  gap: 16px;
 
   max-width: 1000px;
   margin: 0 auto;
