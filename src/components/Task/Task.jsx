@@ -5,8 +5,8 @@ export const Task = ({ task }) => {
   return (
     <div className={css.wrapper}>
       <label className={css['custom-checkbox']}>
-        {/* <input type="checkbox" checked={task.completed} /> */}
-        <input type="checkbox" />
+        <input type="checkbox" checked={task.completed} />
+        {/* <input type="checkbox" /> */}
         <span className={css.checkmark}></span>
       </label>
 
