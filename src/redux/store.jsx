@@ -16,7 +16,13 @@ const initialState = {
 };
 
 const rootReducer = (state = initialState, action) => {
-  return state;
+  switch (action.type) {
+    case 'tasks/addTask':
+      return { ...state, tasks: [...state.tasks, action.payload] };
+
+    default:
+      return state;
+  }
 };
 
 const enhancer = devToolsEnhancer();
