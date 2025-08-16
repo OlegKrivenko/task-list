@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { statusFilters } from './constants';
-
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 const tasksInitialState = [
   { id: 0, text: 'Learn HTML and CSS', completed: true },
   { id: 1, text: 'Get good at JavaScript', completed: true },
@@ -26,7 +26,7 @@ const tasksReducer = (state = tasksInitialState, action) => {
       return state;
   }
 };
-
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 const filtersInitialState = {
   status: statusFilters.all,
 };
