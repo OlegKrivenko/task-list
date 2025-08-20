@@ -41,7 +41,7 @@ const tasksInitialState = [
 export const tasksReducer = createReducer(tasksInitialState, builder => {
   builder
     .addCase(addTask, (state, action) => {
-      state.push(action.payload);
+      return [...state, action.payload];
     })
     .addCase(deleteTask, (state, action) => {
       return state.filter(task => task.id !== action.payload);
