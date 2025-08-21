@@ -7,7 +7,7 @@ export const Button = ({
   children,
   ...otheProps
 }) => {
-  console.log(css);
+  // console.log(css);
   return (
     <button
       className={clsx(css.btn, { [css.isSelected]: selected })}
