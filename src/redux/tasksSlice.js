@@ -19,7 +19,10 @@ const tasksSlice = createSlice({
   reducers: {
     addTask: {
       reducer(state, action) {
-        return { ...state, tasksArray: [...state.tasksArray, action.payload] };
+        state.tasksArray.push(action.payload);
+
+        // =========================================without mutation========================
+        // return { ...state, tasksArray: [...state.tasksArray, action.payload] };
       },
       prepare(text) {
         return {
@@ -32,20 +35,33 @@ const tasksSlice = createSlice({
       },
     },
     deleteTask(state, action) {
-      return {
-        ...state,
-        tasksArray: state.tasksArray.filter(task => task.id !== action.payload),
-      };
+      const index = state.tasksArray.findIndex(
+        task => task.id === action.payload
+      );
+      state.tasksArray.splice(index, 1);
+
+      // =========================================without mutation========================
+      //   return {
+      //     ...state,
+      //     tasksArray: state.tasksArray.filter(task => task.id !== action.payload),
+      //   };
     },
     toggleCompleted(state, action) {
-      return {
-        ...state,
-        tasksArray: state.tasksArray.map(task =>
-          task.id === action.payload
-            ? { ...task, completed: !task.completed }
-            : task
-        ),
-      };
+      for (const task of state.tasksArray) {
+        if (task.id === action.payload) {
+          task.completed = !task.completed;
+        }
+      }
+
+      // =========================================without mutation========================
+      //   return {
+      //     ...state,
+      //     tasksArray: state.tasksArray.map(task =>
+      //       task.id === action.payload
+      //         ? { ...task, completed: !task.completed }
+      //         : task
+      //     ),
+      //   };
     },
   },
 });

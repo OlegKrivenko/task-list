@@ -10,7 +10,10 @@ const filtersSlice = createSlice({
   initialState: filtersInitialState,
   reducers: {
     setStatusFilter(state, action) {
-      return { ...state, status: action.payload };
+      state.status = action.payload;
+
+      // =========================================without mutation========================
+      //   return { ...state, status: action.payload };
     },
   },
 });
