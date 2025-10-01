@@ -1,8 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { nanoid } from 'nanoid';
-import { addTask, deleteTask, fetchTasks, toggleCompleted } from 'operations';
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import {
+  addTask,
+  deleteTask,
+  fetchTasks,
+  toggleCompleted,
+} from '../redux/operations';
 
 const tasksInitialState = {
   tasksArray: [],
@@ -10,40 +12,38 @@ const tasksInitialState = {
   error: null,
 };
 
+const setPendingState = state => {
+  state.isLoading = true;
+};
+
+const setRejectedState = (state, action) => {
+  state.isLoading = false;
+  state.error = action.payload;
+};
+
 const tasksSlice = createSlice({
   name: 'tasks',
   initialState: tasksInitialState,
   extraReducers: builder => {
     builder
-      .addCase(fetchTasks.pending, state => {
-        state.isLoading = true;
-      })
+      // fetchTasks
+      .addCase(fetchTasks.pending, setPendingState)
       .addCase(fetchTasks.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
         state.tasksArray = action.payload;
       })
-      .addCase(fetchTasks.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
-
-      .addCase(addTask.pending, state => {
-        state.isLoading = true;
-      })
+      .addCase(fetchTasks.rejected, setRejectedState)
+      // addTask
+      .addCase(addTask.pending, setPendingState)
       .addCase(addTask.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
         state.tasksArray.push(action.payload);
       })
-      .addCase(addTask.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
-
-      .addCase(deleteTask.pending, state => {
-        state.isLoading = true;
-      })
+      .addCase(addTask.rejected, setRejectedState)
+      // deleteTask
+      .addCase(deleteTask.pending, setPendingState)
       .addCase(deleteTask.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
@@ -54,14 +54,9 @@ const tasksSlice = createSlice({
           state.tasksArray.splice(index, 1);
         }
       })
-      .addCase(deleteTask.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
-
-      .addCase(toggleCompleted.pending, state => {
-        state.isLoading = true;
-      })
+      .addCase(deleteTask.rejected, setRejectedState)
+      // toggleCompleted
+      .addCase(toggleCompleted.pending, setPendingState)
       .addCase(toggleCompleted.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
@@ -71,10 +66,7 @@ const tasksSlice = createSlice({
             : task
         );
       })
-      .addCase(toggleCompleted.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      });
+      .addCase(toggleCompleted.rejected, setRejectedState);
   },
   // reducers: {
   //   addTask: {

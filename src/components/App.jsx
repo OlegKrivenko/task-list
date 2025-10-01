@@ -4,13 +4,13 @@ import { Layout } from './Layout/Layout';
 import { TaskForm } from './TaskForm/TaskForm';
 import { TaskList } from './TaskList/TaskList';
 import { useDispatch } from 'react-redux';
-import { feechTasks } from 'operations';
+import { fetchTasks } from '../redux/operations';
 
 export const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(feechTasks());
+    dispatch(fetchTasks());
   }, [dispatch]);
 
   return (
